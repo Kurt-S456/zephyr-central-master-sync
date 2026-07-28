@@ -99,6 +99,18 @@ Open the serial monitor for the target environment:
 platformio device monitor -e bluepill_f103c8_target
 ```
 
+## Metrics Script
+
+Use the Python script below to compute drift offset, precision, and SPI transaction jitter from child output logs:
+
+```sh
+python3 scripts/calc_metrics.py child0.log child1.log --json-out metrics.json
+```
+
+Notes:
+- Input lines must match the child log format: `CHILD <id> offset: <us> us | synced: <ms>.<frac> ms`.
+- Clock line jitter is reported as unavailable from software logs (it requires oscilloscope edge timing data).
+
 ## Data Format
 
 The controller serializes `k_uptime_get()` into 8 bytes using this layout:
