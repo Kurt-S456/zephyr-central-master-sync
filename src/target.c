@@ -4,6 +4,7 @@
 #include <zephyr/sys/printk.h>
 
 #include <inttypes.h>
+#include <stdbool.h>
 
 #include "benchmark_shared.h"
 
@@ -48,9 +49,14 @@ void target_run(void)
 
 	printk("child: configured CHILD_ID=%d\n", CHILD_ID);
 
+	bool have_reference = false;
+	uint64_t ref_worker_ts_ms = 0U;
+	uint64_t ref_local_ts_ms = 0U;
+
 	for (uint32_t cycle = 0U; cycle < EXPERIMENT_SYNC_CYCLES; cycle++) {
 		uint64_t controller_ts;
 		uint64_t target_ts;
+		uint64_t predicted_worker_ts_ms;
 		int64_t diff_us;
 		int64_t synced_us;
 		uint32_t synced_ms_int;
@@ -65,8 +71,20 @@ void target_run(void)
 
 		target_ts = (uint64_t)k_uptime_get();
 		controller_ts = decode_timestamp(rx_data);
-		diff_us = ((int64_t)controller_ts - (int64_t)target_ts) * 1000LL;
-		synced_us = ((int64_t)target_ts * 1000LL) + diff_us;
+
+		if (!have_reference) {
+			/* First sync establishes the local reference timeline. */
+			diff_us = 0;
+			have_reference = true;
+		} else {
+			predicted_worker_ts_ms = ref_worker_ts_ms + (target_ts - ref_local_ts_ms);
+			diff_us = ((int64_t)predicted_worker_ts_ms - (int64_t)controller_ts) * 1000LL;
+		}
+
+		/* Re-anchor the synced clock to the latest worker timestamp every sync. */
+		ref_worker_ts_ms = controller_ts;
+		ref_local_ts_ms = target_ts;
+		synced_us = (int64_t)controller_ts * 1000LL;
 		if (synced_us < 0) {
 			synced_us = 0;
 		}
