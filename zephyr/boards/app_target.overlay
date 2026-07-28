@@ -1,0 +1,5 @@
+&spi1 {
+	status = "okay";
+	pinctrl-0 = <&spi1_sck_slave_pa5 &spi1_miso_slave_pa6 &spi1_mosi_slave_pa7 &spi1_nss_slave_pa4>;
+	pinctrl-names = "default";
+};

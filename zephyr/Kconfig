@@ -1,0 +1,19 @@
+mainmenu "SPI timestamp exchange"
+
+source "Kconfig.zephyr"
+
+menu "SPI timestamp exchange"
+
+choice SPI_TIMESTAMP_ROLE
+	prompt "SPI timestamp role"
+	default ROLE_CONTROLLER
+
+config ROLE_CONTROLLER
+	bool "Controller"
+
+config ROLE_TARGET
+	bool "Target"
+
+endchoice
+
+endmenu
