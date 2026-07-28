@@ -4,6 +4,8 @@
 #include <stdint.h>
 
 #define SPI_TIMESTAMP_BYTES 8U
+#define RESYNC_INTERVAL_SECONDS 15U
+#define EXPERIMENT_SYNC_CYCLES 240U
 
 static inline void encode_timestamp(uint64_t timestamp, uint8_t *buffer)
 {

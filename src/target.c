@@ -40,7 +40,7 @@ void target_run(void)
 		return;
 	}
 
-	while (1) {
+	for (uint32_t cycle = 0U; cycle < EXPERIMENT_SYNC_CYCLES; cycle++) {
 		uint64_t controller_ts;
 		uint64_t target_ts;
 		int ret;
@@ -57,4 +57,7 @@ void target_run(void)
 		       (unsigned long long)controller_ts,
 		       (unsigned long long)target_ts);
 	}
+
+	printk("child: experiment complete (%u cycles)\n",
+	       (unsigned int)EXPERIMENT_SYNC_CYCLES);
 }

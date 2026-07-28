@@ -102,4 +102,6 @@ The target decodes the received buffer with the matching shift-and-OR loop, then
 - The app prints timestamps to the serial console on both sides.
 - SPI is configured for 8-bit words and MSB-first transfers.
 - The implementation intentionally keeps application data flow one-way (worker -> child) while still using `spi_transceive()` on both nodes.
+- The worker resynchronization interval is 15 seconds.
+- Each experiment runs for 240 sync cycles, so nominal duration is 3600 seconds (1 hour).
 - The application keeps the role selection in the build configuration rather than in runtime arguments.

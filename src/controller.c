@@ -39,9 +39,7 @@ void controller_run(void)
 		return;
 	}
 
-	k_sleep(K_SECONDS(1));
-
-	while (1) {
+	for (uint32_t cycle = 0U; cycle < EXPERIMENT_SYNC_CYCLES; cycle++) {
 		const uint64_t controller_ts = (uint64_t)k_uptime_get();
 		int ret;
 
@@ -56,6 +54,9 @@ void controller_run(void)
 		printk("worker: tx=%llu ms\n",
 		       (unsigned long long)controller_ts);
 
-		k_sleep(K_SECONDS(1));
+		k_sleep(K_SECONDS(RESYNC_INTERVAL_SECONDS));
 	}
+
+	printk("worker: experiment complete (%u cycles)\n",
+	       (unsigned int)EXPERIMENT_SYNC_CYCLES);
 }
