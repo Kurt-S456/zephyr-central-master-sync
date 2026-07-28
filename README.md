@@ -53,6 +53,12 @@ Build the default controller (worker) image:
 platformio run
 ```
 
+Build the worker with a custom number of children (same timestamp sent sequentially to each child per sync cycle):
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DWORKER_CHILD_COUNT=2" platformio run -e bluepill_f103c8_controller
+```
+
 Build the target (child) image:
 
 ```sh
@@ -108,6 +114,7 @@ The target decodes the received buffer with the matching shift-and-OR loop, comp
 - The app prints timestamps to the serial console on both sides.
 - SPI is configured for 8-bit words and MSB-first transfers.
 - The implementation intentionally keeps application data flow one-way (worker -> child) while still using `spi_transceive()` on both nodes.
+- The worker sends the same timestamp in succession to each configured child every sync cycle (`WORKER_CHILD_COUNT`, default fallback: 1 in code).
 - The child adjusts its reported uptime to the received worker timestamp using a per-sync offset (`worker_ts - local_ts`).
 - The worker resynchronization interval is 15 seconds.
 - Each experiment runs for 240 sync cycles, so nominal duration is 3600 seconds (1 hour).
