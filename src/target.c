@@ -43,6 +43,8 @@ void target_run(void)
 	for (uint32_t cycle = 0U; cycle < EXPERIMENT_SYNC_CYCLES; cycle++) {
 		uint64_t controller_ts;
 		uint64_t target_ts;
+		int64_t uptime_offset_ms;
+		int64_t adjusted_target_ts;
 		int ret;
 
 		ret = spi_transceive(spi_dev, &spi_config, &tx_set, &rx_set);
@@ -53,9 +55,14 @@ void target_run(void)
 
 		target_ts = (uint64_t)k_uptime_get();
 		controller_ts = decode_timestamp(rx_data);
-		printk("child: rx_worker=%llu ms captured_target=%llu ms\n",
+		uptime_offset_ms = (int64_t)controller_ts - (int64_t)target_ts;
+		adjusted_target_ts = (int64_t)target_ts + uptime_offset_ms;
+
+		printk("child: rx_worker=%llu ms local=%llu ms adjusted=%lld ms offset=%lld ms\n",
 		       (unsigned long long)controller_ts,
-		       (unsigned long long)target_ts);
+		       (unsigned long long)target_ts,
+		       (long long)adjusted_target_ts,
+		       (long long)uptime_offset_ms);
 	}
 
 	printk("child: experiment complete (%u cycles)\n",

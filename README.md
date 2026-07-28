@@ -3,7 +3,7 @@
 This project contains a single Zephyr application with two build variants:
 
 - controller (referred to as worker in the accompanying paper): sends its uptime timestamp over SPI
-- target (referred to as child in the accompanying paper): receives and decodes the worker timestamp, then captures and prints its local receive-side uptime
+- target (referred to as child in the accompanying paper): receives and decodes the worker timestamp, then computes an offset so its reported uptime is aligned to the received worker timestamp
 
 Both sides use `spi_transceive()` only, with 8-bit words and MSB-first transfer order.
 
@@ -95,13 +95,14 @@ The controller serializes `k_uptime_get()` into 8 bytes using this layout:
 TX_i = (T_worker >> (56 - 8 * i)) & 0xFF
 ```
 
-The target decodes the received buffer with the matching shift-and-OR loop, then prints the received worker timestamp and its own local capture timestamp.
+The target decodes the received buffer with the matching shift-and-OR loop, computes a local offset, and reports an adjusted uptime aligned to the received worker timestamp.
 
 ## Notes
 
 - The app prints timestamps to the serial console on both sides.
 - SPI is configured for 8-bit words and MSB-first transfers.
 - The implementation intentionally keeps application data flow one-way (worker -> child) while still using `spi_transceive()` on both nodes.
+- The child adjusts its reported uptime to the received worker timestamp using a per-sync offset (`worker_ts - local_ts`).
 - The worker resynchronization interval is 15 seconds.
 - Each experiment runs for 240 sync cycles, so nominal duration is 3600 seconds (1 hour).
 - The application keeps the role selection in the build configuration rather than in runtime arguments.
