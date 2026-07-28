@@ -62,7 +62,7 @@ platformio run -e bluepill_f103c8_target
 Build the target with a custom child ID:
 
 ```sh
-platformio run -e bluepill_f103c8_target --project-option="build_flags=-DCHILD_ID=2"
+env PLATFORMIO_BUILD_FLAGS="-DCHILD_ID=2" platformio run -e bluepill_f103c8_target
 ```
 
 ## Flash Commands
@@ -111,5 +111,5 @@ The target decodes the received buffer with the matching shift-and-OR loop, comp
 - The child adjusts its reported uptime to the received worker timestamp using a per-sync offset (`worker_ts - local_ts`).
 - The worker resynchronization interval is 15 seconds.
 - Each experiment runs for 240 sync cycles, so nominal duration is 3600 seconds (1 hour).
-- `CHILD_ID` is a compile-time option (default: 1) set in `platformio.ini` for the target environment.
+- `CHILD_ID` is a compile-time option (default fallback: 1 in code). Override per build with `PLATFORMIO_BUILD_FLAGS`.
 - The application keeps the role selection in the build configuration rather than in runtime arguments.
