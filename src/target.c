@@ -16,10 +16,10 @@ static const struct spi_config spi_config = {
 
 void target_run(void)
 {
-	uint8_t tx_data[SPI_TIMESTAMP_BYTES];
+	uint8_t tx_dummy[SPI_TIMESTAMP_BYTES] = {0};
 	uint8_t rx_data[SPI_TIMESTAMP_BYTES];
 	struct spi_buf tx_buf = {
-		.buf = tx_data,
+		.buf = tx_dummy,
 		.len = SPI_TIMESTAMP_BYTES,
 	};
 	struct spi_buf rx_buf = {
@@ -36,26 +36,25 @@ void target_run(void)
 	};
 
 	if (!device_is_ready(spi_dev)) {
-		printk("target: SPI device is not ready\n");
+		printk("child: SPI device is not ready\n");
 		return;
 	}
 
 	while (1) {
-		const uint64_t target_ts = (uint64_t)k_uptime_get();
 		uint64_t controller_ts;
+		uint64_t target_ts;
 		int ret;
 
-		encode_timestamp(target_ts, tx_data);
 		ret = spi_transceive(spi_dev, &spi_config, &tx_set, &rx_set);
 		if (ret < 0) {
-			printk("target: spi_transceive failed: %d\n", ret);
+			printk("child: spi_transceive failed: %d\n", ret);
 			continue;
 		}
 
+		target_ts = (uint64_t)k_uptime_get();
 		controller_ts = decode_timestamp(rx_data);
-		printk("target: tx=%llu ms rx=%llu ms frames=%d\n",
-		       (unsigned long long)target_ts,
+		printk("child: rx_worker=%llu ms captured_target=%llu ms\n",
 		       (unsigned long long)controller_ts,
-		       ret);
+		       (unsigned long long)target_ts);
 	}
 }

@@ -16,13 +16,13 @@ static const struct spi_config spi_config = {
 void controller_run(void)
 {
 	uint8_t tx_data[SPI_TIMESTAMP_BYTES];
-	uint8_t rx_data[SPI_TIMESTAMP_BYTES];
+	uint8_t rx_discard[SPI_TIMESTAMP_BYTES];
 	struct spi_buf tx_buf = {
 		.buf = tx_data,
 		.len = SPI_TIMESTAMP_BYTES,
 	};
 	struct spi_buf rx_buf = {
-		.buf = rx_data,
+		.buf = rx_discard,
 		.len = SPI_TIMESTAMP_BYTES,
 	};
 	const struct spi_buf_set tx_set = {
@@ -35,7 +35,7 @@ void controller_run(void)
 	};
 
 	if (!device_is_ready(spi_dev)) {
-		printk("controller: SPI device is not ready\n");
+		printk("worker: SPI device is not ready\n");
 		return;
 	}
 
@@ -43,21 +43,18 @@ void controller_run(void)
 
 	while (1) {
 		const uint64_t controller_ts = (uint64_t)k_uptime_get();
-		uint64_t target_ts;
 		int ret;
 
 		encode_timestamp(controller_ts, tx_data);
 		ret = spi_transceive(spi_dev, &spi_config, &tx_set, &rx_set);
 		if (ret < 0) {
-			printk("controller: spi_transceive failed: %d\n", ret);
+			printk("worker: spi_transceive failed: %d\n", ret);
 			k_sleep(K_MSEC(250));
 			continue;
 		}
 
-		target_ts = decode_timestamp(rx_data);
-		printk("controller: tx=%llu ms rx=%llu ms\n",
-		       (unsigned long long)controller_ts,
-		       (unsigned long long)target_ts);
+		printk("worker: tx=%llu ms\n",
+		       (unsigned long long)controller_ts);
 
 		k_sleep(K_SECONDS(1));
 	}
