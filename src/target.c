@@ -8,7 +8,10 @@
 #include "benchmark_shared.h"
 
 #define TARGET_SPI_NODE DT_NODELABEL(spi1)
+
+#ifndef CHILD_ID
 #define CHILD_ID 1
+#endif
 
 static const struct device *const spi_dev = DEVICE_DT_GET(TARGET_SPI_NODE);
 static const struct spi_config spi_config = {
