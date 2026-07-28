@@ -71,6 +71,12 @@ Build the target with a custom child ID:
 env PLATFORMIO_BUILD_FLAGS="-DCHILD_ID=2" platformio run -e bluepill_f103c8_target
 ```
 
+Build and upload the target with a custom child ID (recommended):
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DCHILD_ID=2" platformio run -e bluepill_f103c8_target -t upload
+```
+
 ## Flash Commands
 
 Flash the controller build:
@@ -97,6 +103,14 @@ Open the serial monitor for the target environment:
 
 ```sh
 platformio device monitor -e bluepill_f103c8_target
+```
+
+## Child Log Capture
+
+Collect child output directly to a file with picocom:
+
+```sh
+picocom -b 115200 -g child0.log /dev/ttyUSB0
 ```
 
 ## Metrics Script

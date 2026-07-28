@@ -46,6 +46,8 @@ void target_run(void)
 		return;
 	}
 
+	printk("child: configured CHILD_ID=%d\n", CHILD_ID);
+
 	for (uint32_t cycle = 0U; cycle < EXPERIMENT_SYNC_CYCLES; cycle++) {
 		uint64_t controller_ts;
 		uint64_t target_ts;
