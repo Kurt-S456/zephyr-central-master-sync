@@ -2,14 +2,14 @@
 
 This project contains a single Zephyr application with two build variants:
 
-- controller: sends its uptime timestamp over SPI and prints the timestamps
-- target: receives the timestamp, decodes it, and sends its own uptime back
+- controller (refered to as worker in the accompanying paper): sends its uptime timestamp over SPI and prints the timestamps
+- target (refered to as child in the accompanying paper): receives the timestamp, decodes it, and sends its own uptime back
 
 Both sides use `spi_transceive()` only, with 8-bit words and MSB-first transfer order.
 
 ## Project Layout
 
-- `src/main.c` selects the active role at build time
+`platformio`
 - `src/controller.c` contains the controller (worker) transfer loop
 - `src/target.c` contains the target (child) transfer loop
 - `src/benchmark_shared.h` contains shared timestamp helpers
@@ -41,28 +41,19 @@ PlatformIO is configured with two environments in `platformio.ini`:
 
 The controller environment is the default build.
 
-If PlatformIO is not on your shell path, use the installed binary directly:
-
-`/home/kurt/.platformio/penv/bin/platformio`
+Use `platformio` from your shell path.
 
 ## Build Commands
 
 Build the default controller (worker) image:
 
 ```sh
-/home/kurt/.platformio/penv/bin/platformio run
+platformio run
 ```
 
 Build the target (child) image:
 
 ```sh
-/home/kurt/.platformio/penv/bin/platformio run -e bluepill_f103c8_target
-```
-
-If `platformio` is available on your PATH, you can use the shorter form:
-
-```sh
-platformio run
 platformio run -e bluepill_f103c8_target
 ```
 
@@ -71,13 +62,13 @@ platformio run -e bluepill_f103c8_target
 Flash the controller build:
 
 ```sh
-/home/kurt/.platformio/penv/bin/platformio run -t upload
+platformio run -t upload
 ```
 
 Flash the target build:
 
 ```sh
-/home/kurt/.platformio/penv/bin/platformio run -e bluepill_f103c8_target -t upload
+platformio run -e bluepill_f103c8_target -t upload
 ```
 
 ## Serial Monitor
@@ -85,13 +76,13 @@ Flash the target build:
 Open the serial monitor for the default controller environment:
 
 ```sh
-/home/kurt/.platformio/penv/bin/platformio device monitor
+platformio device monitor
 ```
 
 Open the serial monitor for the target environment:
 
 ```sh
-/home/kurt/.platformio/penv/bin/platformio device monitor -e bluepill_f103c8_target
+platformio device monitor -e bluepill_f103c8_target
 ```
 
 ## Data Format
