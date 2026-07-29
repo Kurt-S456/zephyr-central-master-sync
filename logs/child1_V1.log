@@ -1,0 +1,4 @@
+*** Booting Zephyr OS build zephyr-v40201 ***
+child: configured CHILD_ID=1
+CHILD 1 offset: 0 us | synced: 4.000000 ms
+CHILD 1 offset: -1000 us | synced: 15006.000000 ms

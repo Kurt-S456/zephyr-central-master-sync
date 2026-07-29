@@ -4,6 +4,9 @@
 Expected child log line format:
 CHILD <id> offset: <signed_us> us | synced: <ms_int>.<ms_frac_6> ms
 
+V2 also allows:
+CHILD <id> offset: <signed_us> us | pulse_to_spi: <signed_us> us | synced: <ms_int>.<ms_frac_6> ms
+
 Notes:
 - In current firmware, `offset` is (worker_ts - child_local_ts) in microseconds.
 - Drift offset theta in the write-up is defined as (child_local_ts - worker_ts),
@@ -23,6 +26,7 @@ from typing import Dict, Iterable, List, Optional
 
 LOG_RE = re.compile(
     r"CHILD\s+(?P<child_id>\d+)\s+offset:\s+(?P<offset_us>-?\d+)\s+us\s+\|\s+"
+    r"(?:pulse_to_spi:\s+(?P<pulse_to_spi_us>-?\d+)\s+us\s+\|\s+)?"
     r"synced:\s+(?P<sync_ms_int>\d+)\.(?P<sync_ms_frac>\d{6})\s+ms"
 )
 

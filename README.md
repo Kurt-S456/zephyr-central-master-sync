@@ -1,13 +1,22 @@
-# SPI Timestamp Exchange
+# SPI + GPIO Two-Phase Timestamp Sync
 
 This project contains a single Zephyr application with two build variants:
 
-- controller (referred to as worker in the accompanying paper): sends its uptime timestamp over SPI
-- target (referred to as child in the accompanying paper): receives and decodes the worker timestamp, then computes an offset so its reported uptime is aligned to the received worker timestamp
+- controller (referred to as worker in the accompanying paper): generates a hardware sync pulse, then sends its uptime timestamp over SPI
+- target (referred to as child in the accompanying paper): captures local uptime in a GPIO ISR on the sync edge, then receives and decodes worker timestamp data over SPI
 
-Both sides use `spi_transceive()` only, with 8-bit words and MSB-first transfer order.
+Both sides use `spi_transceive()` only, with 8-bit words and MSB-first transfer order for phase-2 payload transport.
 
 SPI is electrically full-duplex, so both directions clock bytes every transfer. This project uses a unidirectional application protocol: worker -> child payload only. The reverse direction carries dummy bytes for clocking and is ignored at the application level.
+
+## V2 Two-Phase Synchronization
+
+Synchronization is intentionally split into two phases to decouple timing-critical control from variable-latency transport:
+
+1. Phase 1 (hardware trigger): worker reads local uptime and emits a short GPIO pulse on PA0 (A0).
+2. Phase 2 (data delivery): worker sends the captured uptime over SPI, asynchronously.
+
+On the child, PA0 is configured as an interrupt input. The ISR captures local uptime exactly on the pulse edge, then the application thread performs SPI receive and offset correction against that latched ISR timestamp. This removes SPI bus contention and software queue jitter from the critical synchronization edge.
 
 ## Project Layout
 
@@ -30,6 +39,7 @@ Use these signals between the two boards:
 - PA6: MISO
 - PA7: MOSI
 - PA4: NSS / CS
+- PA0 (A0): sync pulse (worker output -> child input)
 - GND: common ground
 
 Controller wiring uses the master pinctrl set. Target wiring uses the slave pinctrl set.
@@ -122,7 +132,9 @@ python3 scripts/calc_metrics.py child0.log child1.log --json-out metrics.json
 ```
 
 Notes:
-- Input lines must match the child log format: `CHILD <id> offset: <us> us | synced: <ms>.<frac> ms`.
+- Input lines must match either child log format:
+	- `CHILD <id> offset: <us> us | synced: <ms>.<frac> ms` (V1)
+	- `CHILD <id> offset: <us> us | pulse_to_spi: <us> us | synced: <ms>.<frac> ms` (V2)
 - Clock line jitter is reported as unavailable from software logs (it requires oscilloscope edge timing data).
 
 ## Data Format
@@ -133,7 +145,7 @@ The controller serializes `k_uptime_get()` into 8 bytes using this layout:
 TX_i = (T_worker >> (56 - 8 * i)) & 0xFF
 ```
 
-The target decodes the received buffer with the matching shift-and-OR loop, computes a local offset, and reports an adjusted uptime aligned to the received worker timestamp.
+The target decodes the received buffer with the matching shift-and-OR loop, computes a local offset, and reports an adjusted uptime aligned to the received worker timestamp. In V2, offset estimation uses the GPIO ISR capture time rather than SPI receive completion time.
 
 ## Notes
 

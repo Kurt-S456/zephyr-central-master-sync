@@ -3,3 +3,18 @@
 	pinctrl-0 = <&spi1_sck_master_pa5 &spi1_miso_master_pa6 &spi1_mosi_master_pa7 &spi1_nss_master_pa4>;
 	pinctrl-names = "default";
 };
+
+/ {
+	leds {
+		compatible = "gpio-leds";
+
+		sync_trigger: sync_trigger_node {
+			gpios = <&gpioa 0 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
+			label = "Hardware Sync Trigger";
+		};
+	};
+
+	aliases {
+		sw0 = &sync_trigger;
+	};
+};

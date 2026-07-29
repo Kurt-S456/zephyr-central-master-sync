@@ -1,4 +1,5 @@
 #include <zephyr/devicetree.h>
+#include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/spi.h>
 #include <zephyr/kernel.h>
 #include <zephyr/sys/printk.h>
@@ -6,12 +7,15 @@
 #include "benchmark_shared.h"
 
 #define CONTROLLER_SPI_NODE DT_NODELABEL(spi1)
+#define SYNC_PIN_NODE DT_ALIAS(sw0)
 
 #ifndef WORKER_CHILD_COUNT
 #define WORKER_CHILD_COUNT 1U
 #endif
 
 static const struct device *const spi_dev = DEVICE_DT_GET(CONTROLLER_SPI_NODE);
+static const struct gpio_dt_spec sync_pin = GPIO_DT_SPEC_GET(SYNC_PIN_NODE, gpios);
+
 static const struct spi_config spi_config = {
 	.frequency = 1000000U,
 	.operation = SPI_WORD_SET(8) | SPI_TRANSFER_MSB | SPI_OP_MODE_MASTER,
@@ -43,10 +47,33 @@ void controller_run(void)
 		return;
 	}
 
+	if (!gpio_is_ready_dt(&sync_pin)) {
+		printk("worker: sync GPIO device is not ready\n");
+		return;
+	}
+
+	if (gpio_pin_configure_dt(&sync_pin, GPIO_OUTPUT_INACTIVE) < 0) {
+		printk("worker: failed to configure sync GPIO\n");
+		return;
+	}
+
 	for (uint32_t cycle = 0U; cycle < EXPERIMENT_SYNC_CYCLES; cycle++) {
 		const uint64_t controller_ts = (uint64_t)k_uptime_get();
+		int pulse_ret;
 
 		encode_timestamp(controller_ts, tx_data);
+
+		pulse_ret = gpio_pin_set_dt(&sync_pin, 1);
+		if (pulse_ret < 0) {
+			printk("worker: failed to set sync pulse high: %d\n", pulse_ret);
+			continue;
+		}
+		k_busy_wait(SYNC_PULSE_WIDTH_US);
+		pulse_ret = gpio_pin_set_dt(&sync_pin, 0);
+		if (pulse_ret < 0) {
+			printk("worker: failed to set sync pulse low: %d\n", pulse_ret);
+			continue;
+		}
 
 		for (uint32_t child = 0U; child < WORKER_CHILD_COUNT; child++) {
 			int ret;

@@ -6,6 +6,8 @@
 #define SPI_TIMESTAMP_BYTES 8U
 #define RESYNC_INTERVAL_SECONDS 15U
 #define EXPERIMENT_SYNC_CYCLES 240U
+#define SYNC_PULSE_WIDTH_US 200U
+#define CHILD_SPI_WAIT_TIMEOUT_MS 3000U
 
 static inline void encode_timestamp(uint64_t timestamp, uint8_t *buffer)
 {
