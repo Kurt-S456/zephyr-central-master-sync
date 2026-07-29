@@ -44,9 +44,9 @@ void controller_run(void)
 	}
 
 	for (uint32_t cycle = 0U; cycle < EXPERIMENT_SYNC_CYCLES; cycle++) {
-		const uint64_t controller_ts = (uint64_t)k_uptime_get();
+		const uint64_t controller_ts_us = get_hw_timestamp_us();
 
-		encode_timestamp(controller_ts, tx_data);
+		encode_timestamp(controller_ts_us, tx_data);
 
 		for (uint32_t child = 0U; child < WORKER_CHILD_COUNT; child++) {
 			int ret;
@@ -61,7 +61,7 @@ void controller_run(void)
 
 			printk("worker: child=%u tx=%llu ms\n",
 			       (unsigned int)(child),
-			       (unsigned long long)controller_ts);
+			       (unsigned long long)(controller_ts_us / 1000U));
 		}
 
 		k_sleep(K_SECONDS(RESYNC_INTERVAL_SECONDS));

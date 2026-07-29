@@ -50,13 +50,13 @@ void target_run(void)
 	printk("child: configured CHILD_ID=%d\n", CHILD_ID);
 
 	bool have_reference = false;
-	uint64_t ref_worker_ts_ms = 0U;
-	uint64_t ref_local_ts_ms = 0U;
+	uint64_t ref_worker_ts_us = 0U;
+	uint64_t ref_local_ts_us = 0U;
 
 	for (uint32_t cycle = 0U; cycle < EXPERIMENT_SYNC_CYCLES; cycle++) {
 		uint64_t controller_ts;
 		uint64_t target_ts;
-		uint64_t predicted_worker_ts_ms;
+		uint64_t predicted_worker_ts_us;
 		int64_t diff_us;
 		int64_t synced_us;
 		uint32_t synced_ms_int;
@@ -69,7 +69,7 @@ void target_run(void)
 			continue;
 		}
 
-		target_ts = (uint64_t)k_uptime_get();
+		target_ts = get_hw_timestamp_us();
 		controller_ts = decode_timestamp(rx_data);
 
 		if (!have_reference) {
@@ -77,14 +77,14 @@ void target_run(void)
 			diff_us = 0;
 			have_reference = true;
 		} else {
-			predicted_worker_ts_ms = ref_worker_ts_ms + (target_ts - ref_local_ts_ms);
-			diff_us = ((int64_t)predicted_worker_ts_ms - (int64_t)controller_ts) * 1000LL;
+			predicted_worker_ts_us = ref_worker_ts_us + (target_ts - ref_local_ts_us);
+			diff_us = (int64_t)predicted_worker_ts_us - (int64_t)controller_ts;
 		}
 
 		/* Re-anchor the synced clock to the latest worker timestamp every sync. */
-		ref_worker_ts_ms = controller_ts;
-		ref_local_ts_ms = target_ts;
-		synced_us = (int64_t)controller_ts * 1000LL;
+		ref_worker_ts_us = controller_ts;
+		ref_local_ts_us = target_ts;
+		synced_us = (int64_t)controller_ts;
 		if (synced_us < 0) {
 			synced_us = 0;
 		}

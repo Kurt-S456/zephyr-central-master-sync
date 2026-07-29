@@ -3,9 +3,18 @@
 
 #include <stdint.h>
 
+#include <zephyr/kernel.h>
+#include <zephyr/sys_clock.h>
+
 #define SPI_TIMESTAMP_BYTES 8U
 #define RESYNC_INTERVAL_SECONDS 15U
 #define EXPERIMENT_SYNC_CYCLES 240U
+
+static inline uint64_t get_hw_timestamp_us(void)
+{
+	return (uint64_t)((uint64_t)k_cycle_get_64() * 1000000ULL /
+			 sys_clock_hw_cycles_per_sec());
+}
 
 static inline void encode_timestamp(uint64_t timestamp, uint8_t *buffer)
 {
