@@ -125,9 +125,19 @@ Notes:
 - Input lines must match the child log format: `CHILD <id> offset: <us> us | synced: <ms>.<frac> ms`.
 - Clock line jitter is reported as unavailable from software logs (it requires oscilloscope edge timing data).
 
+## Hybrid Sync Approach
+
+The current implementation uses a hybrid synchronization method:
+
+- the controller drives a GPIO sync pulse before each SPI exchange
+- the target captures that pulse with an interrupt and uses it as the external sync event
+- both sides timestamp against hardware CPU cycles via `k_cycle_get_64()` and `sys_clock_hw_cycles_per_sec()` for a shared hardware reference
+
+This combination gives the target a deterministic hardware edge trigger while keeping the timing reference tied to the MCU’s own cycle counter rather than just software uptime.
+
 ## Data Format
 
-The controller serializes `k_uptime_get()` into 8 bytes using this layout:
+The controller serializes the hardware-cycle-based timestamp into 8 bytes using this layout:
 
 ```c
 TX_i = (T_worker >> (56 - 8 * i)) & 0xFF
