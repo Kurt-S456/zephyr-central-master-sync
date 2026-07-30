@@ -7,7 +7,7 @@
 #include "benchmark_shared.h"
 
 #define CONTROLLER_SPI_NODE DT_NODELABEL(spi1)
-#define SYNC_PIN_NODE DT_NODELABEL(sync_trigger)
+#define SYNC_PIN_NODE DT_ALIAS(sync_out)
 
 #ifndef WORKER_CHILD_COUNT
 #define WORKER_CHILD_COUNT 1U
@@ -85,9 +85,9 @@ void controller_run(void)
 				continue;
 			}
 
-			printk("worker: child=%u tx=%llu us\n",
+			printk("worker: child=%u tx=%llu ms\n",
 			       (unsigned int)(child),
-			       (unsigned long long)controller_ts_us);
+			       (unsigned long long)(controller_ts_us / 1000ULL));
 		}
 
 		k_sleep(K_SECONDS(RESYNC_INTERVAL_SECONDS));

@@ -10,6 +10,8 @@
 #define RESYNC_INTERVAL_SECONDS 15U
 #define EXPERIMENT_SYNC_CYCLES 240U
 #define SYNC_PULSE_WIDTH_US 200U
+#define CHILD_SPI_WAIT_TIMEOUT_MS 3000U
+#define SYNC_PULSE_WIDTH_US 200U
 
 static inline uint64_t get_hw_timestamp_us(void)
 {

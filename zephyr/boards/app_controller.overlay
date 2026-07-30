@@ -5,16 +5,17 @@
 };
 
 / {
-	leds {
-		compatible = "gpio-leds";
-
-		sync_trigger: sync_trigger_node {
-			gpios = <&gpioa 0 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
-			label = "Hardware Sync Trigger";
-		};
+	aliases {
+		sync-out = &sync_trigger;
 	};
 
-	aliases {
-		sw0 = &sync_trigger;
+	/* Use a dedicated node for the sync signal */
+	sync_signals {
+		compatible = "gpio-leds";
+		sync_trigger: sync_trigger_0 {
+			/* Adjust PA0 to your preferred physical pin */
+			gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
+			label = "Hardware Sync Pulse";
+		};
 	};
 };

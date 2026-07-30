@@ -11,7 +11,7 @@
 #include "benchmark_shared.h"
 
 #define TARGET_SPI_NODE DT_NODELABEL(spi1)
-#define SYNC_PIN_NODE DT_NODELABEL(sync_trigger)
+#define SYNC_PIN_NODE DT_ALIAS(sw0)
 
 #ifndef CHILD_ID
 #define CHILD_ID 0U
