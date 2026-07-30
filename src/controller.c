@@ -7,7 +7,7 @@
 #include "benchmark_shared.h"
 
 #define CONTROLLER_SPI_NODE DT_NODELABEL(spi1)
-#define SYNC_PIN_NODE DT_ALIAS(sw0)
+#define SYNC_PIN_NODE DT_ALIAS(sync_out)
 
 #ifndef WORKER_CHILD_COUNT
 #define WORKER_CHILD_COUNT 1U

@@ -18,7 +18,6 @@
 
 static const struct device *const spi_dev = DEVICE_DT_GET(TARGET_SPI_NODE);
 static const struct gpio_dt_spec sync_pin = GPIO_DT_SPEC_GET(SYNC_PIN_NODE, gpios);
-
 static const struct spi_config spi_config = {
 	.frequency = 1000000U,
 	.operation = SPI_WORD_SET(8) | SPI_TRANSFER_MSB | SPI_OP_MODE_SLAVE,

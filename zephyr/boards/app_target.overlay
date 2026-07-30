@@ -16,5 +16,6 @@
 
 	aliases {
 		sw0 = &sync_trigger;
+		sync-out = &sync_trigger;
 	};
 };
