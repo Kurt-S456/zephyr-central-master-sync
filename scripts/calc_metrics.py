@@ -2,7 +2,7 @@
 """Calculate timing metrics from child log output.
 
 Expected child log line format:
-CHILD <id> offset: <signed_us> us | synced: <ms_int>.<ms_frac_6> ms
+CHILD <id> offset: <signed_us> us | [pulse_to_spi: <us> us |] synced: <ms_int>.<ms_frac_6> ms
 
 Notes:
 - In current firmware, `offset` is (worker_ts - child_local_ts) in microseconds.
@@ -22,7 +22,7 @@ from pathlib import Path
 from typing import Dict, Iterable, List, Optional
 
 LOG_RE = re.compile(
-    r"CHILD\s+(?P<child_id>\d+)\s+offset:\s+(?P<offset_us>-?\d+)\s+us\s+\|\s+"
+    r"CHILD\s+(?P<child_id>\d+)\s+offset:\s+(?P<offset_us>-?\d+)\s+us\s+.*?"
     r"synced:\s+(?P<sync_ms_int>\d+)\.(?P<sync_ms_frac>\d{6})\s+ms"
 )
 
