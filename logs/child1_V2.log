@@ -1,6 +1,6 @@
 Terminal ready
 CHILD 1 offset: 0 us | pulse_to_spi: 61291000 us | synced: 4.000000 ms
-CHILD 1 offset: 46286000 us | pulse_to_spi: 15005000 us | synced: 15008.000000 ms
+CHILD 1 offset: -1000 us | pulse_to_spi: 15005000 us | synced: 15008.000000 ms
 CHILD 1 offset: -2000 us | pulse_to_spi: 15005000 us | synced: 30014.000000 ms
 CHILD 1 offset: 0 us | pulse_to_spi: 15005000 us | synced: 45019.000000 ms
 CHILD 1 offset: 0 us | pulse_to_spi: 15005000 us | synced: 60024.000000 ms
