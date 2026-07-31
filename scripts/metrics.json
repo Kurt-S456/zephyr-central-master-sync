@@ -1,0 +1,79 @@
+{
+  "samples_total": 480,
+  "children_detected": [
+    0,
+    1
+  ],
+  "drift_offset": {
+    "definition": "theta_us = child_local_ts_us - worker_ts_us = -offset_us",
+    "per_child": [
+      {
+        "child_id": 0,
+        "samples": 240,
+        "theta_us_min": -1000,
+        "theta_us_max": 2000,
+        "theta_us_mean": 687.5,
+        "theta_us_stddev": 498.17374813746795,
+        "abs_theta_us_mean": 695.8333333333334,
+        "abs_theta_us_max": 2000,
+        "spi_transaction_jitter_us": 3000,
+        "theta_ms_min": -1.0,
+        "theta_ms_max": 2.0,
+        "theta_ms_mean": 0.6875,
+        "theta_ms_stddev": 0.49817374813746795,
+        "abs_theta_ms_mean": 0.6958333333333334,
+        "abs_theta_ms_max": 2.0,
+        "spi_transaction_jitter_ms": 3.0
+      },
+      {
+        "child_id": 1,
+        "samples": 240,
+        "theta_us_min": -1000,
+        "theta_us_max": 2000,
+        "theta_us_mean": 616.6666666666666,
+        "theta_us_stddev": 527.3097339852125,
+        "abs_theta_us_mean": 650,
+        "abs_theta_us_max": 2000,
+        "spi_transaction_jitter_us": 3000,
+        "theta_ms_min": -1.0,
+        "theta_ms_max": 2.0,
+        "theta_ms_mean": 0.6166666666666666,
+        "theta_ms_stddev": 0.5273097339852124,
+        "abs_theta_ms_mean": 0.65,
+        "abs_theta_ms_max": 2.0,
+        "spi_transaction_jitter_ms": 3.0
+      }
+    ]
+  },
+  "precision": {
+    "cycles_evaluated": 240,
+    "precision_us_max": 1000,
+    "precision_us_mean": 87.5,
+    "precision_us_stddev": 282.5663638864329,
+    "precision_ms_max": 1.0,
+    "precision_ms_mean": 0.0875,
+    "precision_ms_stddev": 0.2825663638864329
+  },
+  "jitter": {
+    "clock_line_jitter": {
+      "available": false,
+      "reason": "Cannot be derived from child software logs; requires oscilloscope edge timing data."
+    },
+    "spi_transaction_jitter": {
+      "definition": "epsilon_i = max(theta_i) - min(theta_i) over the observation window",
+      "unit": "us",
+      "per_child": [
+        {
+          "child_id": 0,
+          "epsilon_us": 3000,
+          "epsilon_ms": 3.0
+        },
+        {
+          "child_id": 1,
+          "epsilon_us": 3000,
+          "epsilon_ms": 3.0
+        }
+      ]
+    }
+  }
+}
