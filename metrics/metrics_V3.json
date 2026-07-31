@@ -1,0 +1,79 @@
+{
+  "samples_total": 479,
+  "children_detected": [
+    0,
+    1
+  ],
+  "drift_offset": {
+    "definition": "theta_us = child_local_ts_us - worker_ts_us = -offset_us",
+    "per_child": [
+      {
+        "child_id": 0,
+        "samples": 239,
+        "theta_us_min": 0,
+        "theta_us_max": 1384,
+        "theta_us_mean": 694.1548117154812,
+        "theta_us_stddev": 63.685789616076256,
+        "abs_theta_us_mean": 694.1548117154812,
+        "abs_theta_us_max": 1384,
+        "spi_transaction_jitter_us": 1384,
+        "theta_ms_min": 0.0,
+        "theta_ms_max": 1.384,
+        "theta_ms_mean": 0.6941548117154812,
+        "theta_ms_stddev": 0.06368578961607625,
+        "abs_theta_ms_mean": 0.6941548117154812,
+        "abs_theta_ms_max": 1.384,
+        "spi_transaction_jitter_ms": 1.384
+      },
+      {
+        "child_id": 1,
+        "samples": 240,
+        "theta_us_min": 0,
+        "theta_us_max": 723,
+        "theta_us_mean": 615.4125,
+        "theta_us_stddev": 40.43936626296213,
+        "abs_theta_us_mean": 615.4125,
+        "abs_theta_us_max": 723,
+        "spi_transaction_jitter_us": 723,
+        "theta_ms_min": 0.0,
+        "theta_ms_max": 0.723,
+        "theta_ms_mean": 0.6154125,
+        "theta_ms_stddev": 0.04043936626296213,
+        "abs_theta_ms_mean": 0.6154125,
+        "abs_theta_ms_max": 0.723,
+        "spi_transaction_jitter_ms": 0.723
+      }
+    ]
+  },
+  "precision": {
+    "cycles_evaluated": 239,
+    "precision_us_max": 767,
+    "precision_us_mean": 78.74058577405857,
+    "precision_us_stddev": 44.901934816714565,
+    "precision_ms_max": 0.767,
+    "precision_ms_mean": 0.07874058577405857,
+    "precision_ms_stddev": 0.04490193481671457
+  },
+  "jitter": {
+    "clock_line_jitter": {
+      "available": false,
+      "reason": "Cannot be derived from child software logs; requires oscilloscope edge timing data."
+    },
+    "spi_transaction_jitter": {
+      "definition": "epsilon_i = max(theta_i) - min(theta_i) over the observation window",
+      "unit": "us",
+      "per_child": [
+        {
+          "child_id": 0,
+          "epsilon_us": 1384,
+          "epsilon_ms": 1.384
+        },
+        {
+          "child_id": 1,
+          "epsilon_us": 723,
+          "epsilon_ms": 0.723
+        }
+      ]
+    }
+  }
+}
