@@ -77,6 +77,44 @@ Build and upload the target with a custom child ID (recommended):
 env PLATFORMIO_BUILD_FLAGS="-DCHILD_ID=2" platformio run -e bluepill_f103c8_target -t upload
 ```
 
+## Load Testing Builds
+
+The project supports two operational build profiles:
+
+- idle: synthetic load disabled
+- stressed: synthetic load enabled with a high-priority dummy thread
+
+Build controller (idle):
+
+```sh
+platformio run -e bluepill_f103c8_controller
+```
+
+Build target (idle):
+
+```sh
+platformio run -e bluepill_f103c8_target
+```
+
+Build controller (stressed):
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DCONFIG_SYNTHETIC_LOAD_TEST=1 -DCONFIG_SYNTHETIC_LOAD_STACKSIZE=1024 -DCONFIG_SYNTHETIC_LOAD_PRIORITY=5 -DCONFIG_SYNTHETIC_LOAD_LOOP_ITERS=100000 -DCONFIG_SYNTHETIC_LOAD_BUSY_WAIT_US=100 -DWORKER_CHILD_COUNT=2" platformio run -e bluepill_f103c8_controller
+```
+
+Build target (stressed):
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DCONFIG_SYNTHETIC_LOAD_TEST=1 -DCONFIG_SYNTHETIC_LOAD_STACKSIZE=1024 -DCONFIG_SYNTHETIC_LOAD_PRIORITY=5 -DCONFIG_SYNTHETIC_LOAD_LOOP_ITERS=100000 -DCONFIG_SYNTHETIC_LOAD_BUSY_WAIT_US=100 -DCHILD_ID=1" platformio run -e bluepill_f103c8_target
+```
+
+Build and upload stressed images:
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DCONFIG_SYNTHETIC_LOAD_TEST=1 -DCONFIG_SYNTHETIC_LOAD_STACKSIZE=1024 -DCONFIG_SYNTHETIC_LOAD_PRIORITY=5 -DCONFIG_SYNTHETIC_LOAD_LOOP_ITERS=100000 -DCONFIG_SYNTHETIC_LOAD_BUSY_WAIT_US=100 -DWORKER_CHILD_COUNT=2" platformio run -e bluepill_f103c8_controller -t upload
+env PLATFORMIO_BUILD_FLAGS="-DCONFIG_SYNTHETIC_LOAD_TEST=1 -DCONFIG_SYNTHETIC_LOAD_STACKSIZE=1024 -DCONFIG_SYNTHETIC_LOAD_PRIORITY=5 -DCONFIG_SYNTHETIC_LOAD_LOOP_ITERS=100000 -DCONFIG_SYNTHETIC_LOAD_BUSY_WAIT_US=100 -DCHILD_ID=1" platformio run -e bluepill_f103c8_target -t upload
+```
+
 ## Flash Commands
 
 Flash the controller build:

@@ -16,4 +16,35 @@ config ROLE_TARGET
 
 endchoice
 
+config SYNTHETIC_LOAD_TEST
+	bool "Enable synthetic CPU load thread"
+	default n
+	help
+	  Starts a high-priority dummy thread to generate CPU contention for
+	  synchronization stress testing.
+
+config SYNTHETIC_LOAD_STACKSIZE
+	int "Synthetic load thread stack size"
+	default 1024
+	depends on SYNTHETIC_LOAD_TEST
+	range 512 8192
+
+config SYNTHETIC_LOAD_PRIORITY
+	int "Synthetic load thread priority"
+	default 5
+	depends on SYNTHETIC_LOAD_TEST
+	range -20 99
+
+config SYNTHETIC_LOAD_LOOP_ITERS
+	int "Synthetic load loop iterations"
+	default 100000
+	depends on SYNTHETIC_LOAD_TEST
+	range 1000 10000000
+
+config SYNTHETIC_LOAD_BUSY_WAIT_US
+	int "Synthetic load busy wait duration (us)"
+	default 100
+	depends on SYNTHETIC_LOAD_TEST
+	range 0 1000000
+
 endmenu
