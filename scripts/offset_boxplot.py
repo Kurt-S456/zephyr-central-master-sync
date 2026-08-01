@@ -57,6 +57,13 @@ for version, children_list in metrics.items():
 
 df = pd.DataFrame(rows)
 
+group_sizes = df.groupby(["Version", "Child"]).size()
+unique_sizes = sorted(group_sizes.unique())
+if len(unique_sizes) == 1:
+    n_summary = f"n={unique_sizes[0]} per child"
+else:
+    n_summary = f"n={min(unique_sizes)}-{max(unique_sizes)} per child"
+
 # 3. Plotting Setup
 sns.set_theme(style="whitegrid")
 fig, ax = plt.subplots(figsize=(12, 6))
@@ -72,7 +79,12 @@ sns.boxplot(
     ax=ax
 )
 
-ax.set_title(r"Drift Offset ($\theta$) Comparison Across Implementations (V1 – V4)", fontsize=14, fontweight='bold', pad=15)
+ax.set_title(
+    f"Drift Offset ($\\theta$) Comparison Across Implementations (V1 - V4)\nValue: Distribution (median/IQR/whiskers) with mean marker; Sample Size: {n_summary}",
+    fontsize=14,
+    fontweight='bold',
+    pad=15,
+)
 ax.set_xlabel("Implementation Version", fontsize=12, fontweight='bold')
 ax.set_ylabel(r"Drift Offset $\theta$ (ms)", fontsize=12, fontweight='bold')
 
