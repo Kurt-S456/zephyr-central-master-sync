@@ -26,6 +26,8 @@ static void dummy_load_thread(void *arg1, void *arg2, void *arg3)
 
 void controller_run(void);
 void target_run(void);
+void jitter_controller_run(void);
+void jitter_target_run(void);
 
 void main(void)
 {
@@ -47,6 +49,10 @@ void main(void)
 	controller_run();
 #elif IS_ENABLED(CONFIG_ROLE_TARGET)
 	target_run();
+#elif IS_ENABLED(CONFIG_ROLE_JITTER_CONTROLLER)
+	jitter_controller_run();
+#elif IS_ENABLED(CONFIG_ROLE_JITTER_TARGET)
+	jitter_target_run();
 #else
 #error "Select either CONFIG_ROLE_CONTROLLER or CONFIG_ROLE_TARGET"
 #endif

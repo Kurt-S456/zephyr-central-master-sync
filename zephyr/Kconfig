@@ -14,6 +14,12 @@ config ROLE_CONTROLLER
 config ROLE_TARGET
 	bool "Target"
 
+config ROLE_JITTER_CONTROLLER
+	bool "Clock jitter controller"
+
+config ROLE_JITTER_TARGET
+	bool "Clock jitter target"
+
 endchoice
 
 config SYNTHETIC_LOAD_TEST

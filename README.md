@@ -40,6 +40,8 @@ PlatformIO is configured with two environments in `platformio.ini`:
 
 - `bluepill_f103c8_controller`
 - `bluepill_f103c8_target`
+- `bluepill_f103c8_jitter_controller`
+- `bluepill_f103c8_jitter_target`
 
 The controller environment is the default build.
 
@@ -76,6 +78,54 @@ Build and upload the target with a custom child ID (recommended):
 ```sh
 env PLATFORMIO_BUILD_FLAGS="-DCHILD_ID=2" platformio run -e bluepill_f103c8_target -t upload
 ```
+
+## Clock Line Jitter Builds
+
+Use the dedicated continuous-transfer environments below when you want the SPI clock to run indefinitely for oscilloscope-based clock-line jitter measurements.
+
+Build the continuous SPI master source:
+
+```sh
+platformio run -e bluepill_f103c8_jitter_controller
+```
+
+Build the continuous SPI slave sink:
+
+```sh
+platformio run -e bluepill_f103c8_jitter_target
+```
+
+Build and upload the continuous SPI master source:
+
+```sh
+platformio run -e bluepill_f103c8_jitter_controller -t upload
+```
+
+Build and upload the continuous SPI slave sink:
+
+```sh
+platformio run -e bluepill_f103c8_jitter_target -t upload
+```
+
+Build the continuous SPI master source with a custom clock frequency, for example 2 MHz:
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DJITTER_SPI_FREQUENCY_HZ=2000000" platformio run -e bluepill_f103c8_jitter_controller
+```
+
+Build and upload the continuous SPI master source with a custom clock frequency, for example 2 MHz:
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DJITTER_SPI_FREQUENCY_HZ=2000000" platformio run -e bluepill_f103c8_jitter_controller -t upload
+```
+
+Build and upload the matching continuous SPI slave sink with the same custom clock frequency:
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DJITTER_SPI_FREQUENCY_HZ=2000000" platformio run -e bluepill_f103c8_jitter_target -t upload
+```
+
+Keep `JITTER_SPI_FREQUENCY_HZ` identical on both jitter environments.
 
 ## Load Testing Builds
 
