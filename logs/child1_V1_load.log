@@ -1,0 +1,241 @@
+CHILD 1 offset: 0 us | synced: 4.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 30053.000000 ms
+CHILD 1 offset: 0 us | synced: 45078.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 75128.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 120203.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 150254.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 195329.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 225380.000000 ms
+CHILD 1 offset: 0 us | synced: 240405.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 270455.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 300506.000000 ms
+CHILD 1 offset: -1000 us | synced: 315531.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 345581.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 390657.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 420707.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 465783.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 495833.000000 ms
+CHILD 1 offset: -1000 us | synced: 510858.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 540909.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 585984.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 616035.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 661110.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 691161.000000 ms
+CHILD 1 offset: -1000 us | synced: 706186.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 736236.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 766287.000000 ms
+CHILD 1 offset: 0 us | synced: 781312.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 811362.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -3000 us | synced: 856438.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 886488.000000 ms
+CHILD 1 offset: -1000 us | synced: 901514.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 931564.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 961614.000000 ms
+CHILD 1 offset: -1000 us | synced: 976640.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 1006690.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1051766.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1081817.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 1126892.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1156943.000000 ms
+CHILD 1 offset: 0 us | synced: 1171968.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1202019.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1247095.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 1277145.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1322221.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1352272.000000 ms
+CHILD 1 offset: 0 us | synced: 1367297.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1397348.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1442424.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 1472474.000000 ms
+CHILD 1 offset: -1000 us | synced: 1487500.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 1517550.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1547601.000000 ms
+CHILD 1 offset: 0 us | synced: 1562626.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1592677.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1637753.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 1667803.000000 ms
+CHILD 1 offset: -1000 us | synced: 1682829.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 1712879.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1742930.000000 ms
+CHILD 1 offset: 0 us | synced: 1757955.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1788006.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1833082.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 1863132.000000 ms
+CHILD 1 offset: 0 us | synced: 1878157.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1908208.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1938259.000000 ms
+CHILD 1 offset: 0 us | synced: 1953284.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 1983335.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2028410.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2058461.000000 ms
+CHILD 1 offset: 0 us | synced: 2073486.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2103537.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2133588.000000 ms
+CHILD 1 offset: -1000 us | synced: 2148613.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: 0 us | synced: 2178663.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -3000 us | synced: 2223739.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2253790.000000 ms
+CHILD 1 offset: -1000 us | synced: 2268815.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2298866.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2328916.000000 ms
+CHILD 1 offset: -2000 us | synced: 2343942.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: 0 us | synced: 2373992.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2419068.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2449119.000000 ms
+CHILD 1 offset: -1000 us | synced: 2464144.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2494195.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2524245.000000 ms
+CHILD 1 offset: -1000 us | synced: 2539271.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2569321.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2614397.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2644448.000000 ms
+CHILD 1 offset: 0 us | synced: 2659473.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2689524.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2719574.000000 ms
+CHILD 1 offset: -1000 us | synced: 2734600.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2764650.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2809726.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2839777.000000 ms
+CHILD 1 offset: 0 us | synced: 2854802.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2884853.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 2914903.000000 ms
+CHILD 1 offset: 0 us | synced: 2929928.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 2959979.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3005055.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3035106.000000 ms
+CHILD 1 offset: 0 us | synced: 3050131.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 3080181.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3110232.000000 ms
+CHILD 1 offset: 0 us | synced: 3125257.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3155308.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3200384.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 3230434.000000 ms
+CHILD 1 offset: -1000 us | synced: 3245460.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 3275510.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3320586.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3350637.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3395713.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: 0 us | synced: 3425763.000000 ms
+CHILD 1 offset: -2000 us | synced: 3440789.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 3470839.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -2000 us | synced: 3515915.000000 ms
+child: spi_transceive failed: -5
+CHILD 1 offset: -1000 us | synced: 3545966.000000 ms
+child: spi_transceive failed: -5
+child: spi_transceive failed: -5
+CHILD 1 offset: -3000 us | synced: 3591042.000000 ms
+child: experiment complete (240 cycles)
