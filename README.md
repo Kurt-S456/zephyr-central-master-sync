@@ -59,6 +59,12 @@ Build the worker with a custom number of children (same timestamp sent sequentia
 env PLATFORMIO_BUILD_FLAGS="-DWORKER_CHILD_COUNT=2" platformio run -e bluepill_f103c8_controller
 ```
 
+Build the worker with synthetic load test parameters:
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DCONFIG_SYNTHETIC_LOAD_TEST=1 -DCONFIG_SYNTHETIC_LOAD_STACKSIZE=4096 -DCONFIG_SYNTHETIC_LOAD_PRIORITY=1 -DCONFIG_SYNTHETIC_LOAD_LOOP_ITERS=1000000 -DCONFIG_SYNTHETIC_LOAD_BUSY_WAIT_US=10 -DWORKER_CHILD_COUNT=2" platformio run -e bluepill_f103c8_controller
+```
+
 Build the target (child) image:
 
 ```sh
@@ -69,6 +75,12 @@ Build the target with a custom child ID:
 
 ```sh
 env PLATFORMIO_BUILD_FLAGS="-DCHILD_ID=2" platformio run -e bluepill_f103c8_target
+```
+
+Build the target (child) with synthetic load parameters:
+
+```sh
+env PLATFORMIO_BUILD_FLAGS="-DCONFIG_SYNTHETIC_LOAD_TEST=1 -DCONFIG_SYNTHETIC_LOAD_STACKSIZE=4096 -DCONFIG_SYNTHETIC_LOAD_PRIORITY=2 -DCONFIG_SYNTHETIC_LOAD_LOOP_ITERS=1000000 -DCONFIG_SYNTHETIC_LOAD_BUSY_WAIT_US=10 -DCHILD_ID=0" platformio run -e bluepill_f103c8_target
 ```
 
 Build and upload the target with a custom child ID (recommended):
