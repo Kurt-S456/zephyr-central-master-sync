@@ -26,6 +26,8 @@ LOG_RE = re.compile(
     r"synced:\s+(?P<sync_ms_int>\d+)\.(?P<sync_ms_frac>\d{6})\s+ms"
 )
 
+SPI_ERROR_RE = re.compile(r"\bspi(?:_transceive)?\b.*\b(?:failed|error)\b", re.IGNORECASE)
+
 
 @dataclass
 class Sample:
@@ -166,7 +168,26 @@ def summarize_precision(samples: List[Sample]) -> PrecisionSummary:
     )
 
 
-def build_report(samples: List[Sample]) -> dict:
+def count_spi_errors(paths: Iterable[Path]) -> dict:
+    per_file: Dict[str, int] = {}
+    total = 0
+
+    for path in paths:
+        count = 0
+        with path.open("r", encoding="utf-8", errors="replace") as f:
+            for line in f:
+                if SPI_ERROR_RE.search(line):
+                    count += 1
+        per_file[str(path)] = count
+        total += count
+
+    return {
+        "total": total,
+        "per_file": per_file,
+    }
+
+
+def build_report(samples: List[Sample], spi_errors: dict) -> dict:
     child_summaries = summarize_children(samples)
     precision_summary = summarize_precision(samples)
 
@@ -197,6 +218,7 @@ def build_report(samples: List[Sample]) -> dict:
     report = {
         "samples_total": len(samples),
         "children_detected": sorted({s.child_id for s in samples}),
+        "spi_errors": spi_errors,
         "drift_offset": {
             "definition": "theta_us = child_local_ts_us - worker_ts_us = -offset_us",
             "per_child": per_child_report,
@@ -228,6 +250,7 @@ def print_report(report: dict) -> None:
     print("=== Metrics Summary ===")
     print(f"samples_total: {report['samples_total']}")
     print(f"children_detected: {report['children_detected']}")
+    print(f"spi_errors_total: {report['spi_errors']['total']}")
     print()
 
     print("--- Drift Offset (theta) ---")
@@ -303,7 +326,8 @@ def main() -> int:
         print("error: no matching CHILD log lines found in the provided inputs")
         return 1
 
-    report = build_report(samples)
+    spi_errors = count_spi_errors(args.inputs)
+    report = build_report(samples, spi_errors)
     print_report(report)
 
     if args.json_out is not None:
