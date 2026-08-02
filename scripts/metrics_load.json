@@ -1,0 +1,79 @@
+{
+  "samples_total": 480,
+  "children_detected": [
+    0,
+    1
+  ],
+  "drift_offset": {
+    "definition": "theta_us = child_local_ts_us - worker_ts_us = -offset_us",
+    "per_child": [
+      {
+        "child_id": 0,
+        "samples": 240,
+        "theta_us_min": 0,
+        "theta_us_max": 8692952,
+        "theta_us_mean": 62551.9125,
+        "theta_us_stddev": 690646.6178581705,
+        "abs_theta_us_mean": 62551.9125,
+        "abs_theta_us_max": 8692952,
+        "spi_transaction_jitter_us": 8692952,
+        "theta_ms_min": 0.0,
+        "theta_ms_max": 8692.952,
+        "theta_ms_mean": 62.5519125,
+        "theta_ms_stddev": 690.6466178581705,
+        "abs_theta_ms_mean": 62.5519125,
+        "abs_theta_ms_max": 8692.952,
+        "spi_transaction_jitter_ms": 8692.952
+      },
+      {
+        "child_id": 1,
+        "samples": 240,
+        "theta_us_min": -54,
+        "theta_us_max": 8692921,
+        "theta_us_mean": 62476.525,
+        "theta_us_stddev": 690650.1030190439,
+        "abs_theta_us_mean": 62569.75833333333,
+        "abs_theta_us_max": 8692921,
+        "spi_transaction_jitter_us": 8692975,
+        "theta_ms_min": -0.054,
+        "theta_ms_max": 8692.921,
+        "theta_ms_mean": 62.476525,
+        "theta_ms_stddev": 690.650103019044,
+        "abs_theta_ms_mean": 62.56975833333333,
+        "abs_theta_ms_max": 8692.921,
+        "spi_transaction_jitter_ms": 8692.975
+      }
+    ]
+  },
+  "precision": {
+    "cycles_evaluated": 240,
+    "precision_us_max": 78,
+    "precision_us_mean": 75.3875,
+    "precision_us_stddev": 6.055631848398096,
+    "precision_ms_max": 0.078,
+    "precision_ms_mean": 0.0753875,
+    "precision_ms_stddev": 0.006055631848398095
+  },
+  "jitter": {
+    "clock_line_jitter": {
+      "available": false,
+      "reason": "Cannot be derived from child software logs; requires oscilloscope edge timing data."
+    },
+    "spi_transaction_jitter": {
+      "definition": "epsilon_i = max(theta_i) - min(theta_i) over the observation window",
+      "unit": "us",
+      "per_child": [
+        {
+          "child_id": 0,
+          "epsilon_us": 8692952,
+          "epsilon_ms": 8692.952
+        },
+        {
+          "child_id": 1,
+          "epsilon_us": 8692975,
+          "epsilon_ms": 8692.975
+        }
+      ]
+    }
+  }
+}
