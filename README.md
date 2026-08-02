@@ -213,6 +213,45 @@ Notes:
 - Input lines must match the child log format: `CHILD <id> offset: <us> us | synced: <ms>.<frac> ms`.
 - Clock line jitter is reported as unavailable from software logs (it requires oscilloscope edge timing data).
 
+## Chart Generation
+
+Generate charts from the versioned metrics files in `metrics/`.
+
+Drift offset boxplot (normal metrics):
+
+```sh
+python3 scripts/offset_boxplot.py
+```
+
+SPI jitter bar chart (normal metrics):
+
+```sh
+python3 scripts/jitter_barchart.py
+```
+
+Under-load mode (uses `metrics_load_V1.json` ... `metrics_load_V4.json`, adds load heading, and writes `_load` output filenames):
+
+```sh
+python3 scripts/offset_boxplot.py --under-load
+python3 scripts/jitter_barchart.py --under-load
+```
+
+Custom under-load heading text:
+
+```sh
+python3 scripts/offset_boxplot.py --under-load --load-heading "Under Load: custom parameters"
+python3 scripts/jitter_barchart.py --under-load --load-heading "Under Load: custom parameters"
+```
+
+Custom output basename (without extension):
+
+```sh
+python3 scripts/offset_boxplot.py --output-stem drift_offset_custom
+python3 scripts/jitter_barchart.py --output-stem spi_jitter_custom
+```
+
+The scripts always export both `.svg` and `.pdf` files.
+
 ## Data Format
 
 The controller serializes `k_uptime_get()` into 8 bytes using this layout:

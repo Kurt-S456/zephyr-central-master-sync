@@ -1,5 +1,6 @@
 import json
 import os
+import argparse
 import matplotlib
 # Force Matplotlib to use the non-interactive 'Agg' backend before importing pyplot
 matplotlib.use('Agg')
@@ -11,14 +12,48 @@ import seaborn as sns
 from scipy.stats import truncnorm
 
 # 1. File mapping for the 4 implementation versions
-json_files = {
+JSON_FILES_NORMAL = {
     "V1 (Baseline)": "../metrics/metrics_V1.json",
     "V2 (Hardware Pulse)": "../metrics/metrics_V2.json",
     "V3 (Hardware Timing)": "../metrics/metrics_V3.json",
     "V4 (Hybrid)": "../metrics/metrics_V4.json"
 }
 
-def load_metrics():
+JSON_FILES_LOAD = {
+    "V1 (Baseline)": "../metrics/metrics_load_V1.json",
+    "V2 (Hardware Pulse)": "../metrics/metrics_load_V2.json",
+    "V3 (Hardware Timing)": "../metrics/metrics_load_V3.json",
+    "V4 (Hybrid)": "../metrics/metrics_load_V4.json"
+}
+
+DEFAULT_LOAD_HEADING = (
+    "Under Load: CONFIG_SYNTHETIC_LOAD_TEST=1, STACKSIZE=4096, PRIORITY=0, "
+    "LOOP_ITERS=1000000, BUSY_WAIT_US=10"
+)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Generate drift offset boxplot chart.")
+    parser.add_argument(
+        "--under-load",
+        action="store_true",
+        help="Append an under-load heading with synthetic load parameters.",
+    )
+    parser.add_argument(
+        "--load-heading",
+        type=str,
+        default=DEFAULT_LOAD_HEADING,
+        help="Custom under-load heading text (used only with --under-load).",
+    )
+    parser.add_argument(
+        "--output-stem",
+        type=str,
+        default=None,
+        help="Optional output basename (without extension).",
+    )
+    return parser.parse_args()
+
+def load_metrics(json_files):
     parsed_data = {}
     for version, file_path in json_files.items():
         with open(file_path, 'r') as f:
@@ -41,7 +76,9 @@ def recreate_samples(child, seed=42):
     return truncnorm.rvs(a, b, loc=mean, scale=std, size=n)
 
 # 2. Build DataFrame
-metrics = load_metrics()
+args = parse_args()
+json_files = JSON_FILES_LOAD if args.under_load else JSON_FILES_NORMAL
+metrics = load_metrics(json_files)
 rows = []
 for version, children_list in metrics.items():
     for child in children_list:
@@ -79,8 +116,12 @@ sns.boxplot(
     ax=ax
 )
 
+title_main = "Drift Offset ($\\theta$) Comparison Across Implementations (V1 - V4)"
+if args.under_load:
+    title_main = f"{title_main}\n{args.load_heading}"
+
 ax.set_title(
-    f"Drift Offset ($\\theta$) Comparison Across Implementations (V1 - V4)\nValue: Distribution (median/IQR/whiskers) with mean marker; Sample Size: {n_summary}",
+    f"{title_main}\nValue: Distribution (median/IQR/whiskers) with mean marker; Sample Size: {n_summary}",
     fontsize=14,
     fontweight='bold',
     pad=15,
@@ -95,10 +136,12 @@ ax.legend(title="Child Node", loc="upper right")
 plt.tight_layout()
 
 # 4. Export as Vector Graphic (.svg or .pdf)
-# Option A: SVG (Ideal for web, Inkscape, or inline LaTeX via svg package)
-plt.savefig("drift_offset_boxplot.svg", format="svg", bbox_inches="tight")
+default_stem = "drift_offset_boxplot_load" if args.under_load else "drift_offset_boxplot"
+output_stem = args.output_stem or default_stem
+svg_out = f"{output_stem}.svg"
+pdf_out = f"{output_stem}.pdf"
 
-# Option B: PDF (Ideal for academic LaTeX documents / IEEE / ACM papers)
-plt.savefig("drift_offset_boxplot.pdf", format="pdf", bbox_inches="tight")
+plt.savefig(svg_out, format="svg", bbox_inches="tight")
+plt.savefig(pdf_out, format="pdf", bbox_inches="tight")
 
-print("Exported vector graphics successfully: 'drift_offset_boxplot.svg' and 'drift_offset_boxplot.pdf'")
+print(f"Exported vector graphics successfully: '{svg_out}' and '{pdf_out}'")
