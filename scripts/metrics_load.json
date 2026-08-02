@@ -1,0 +1,86 @@
+{
+  "samples_total": 206,
+  "children_detected": [
+    0,
+    1
+  ],
+  "spi_errors": {
+    "total": 200,
+    "per_file": {
+      "../logs/child0_V1_load.log": 83,
+      "../logs/child1_V1_load.log": 117
+    }
+  },
+  "drift_offset": {
+    "definition": "theta_us = child_local_ts_us - worker_ts_us = -offset_us",
+    "per_child": [
+      {
+        "child_id": 0,
+        "samples": 83,
+        "theta_us_min": 0,
+        "theta_us_max": 3000,
+        "theta_us_mean": 1506.0240963855422,
+        "theta_us_stddev": 665.3831938064615,
+        "abs_theta_us_mean": 1506.0240963855422,
+        "abs_theta_us_max": 3000,
+        "spi_transaction_jitter_us": 3000,
+        "theta_ms_min": 0.0,
+        "theta_ms_max": 3.0,
+        "theta_ms_mean": 1.5060240963855422,
+        "theta_ms_stddev": 0.6653831938064615,
+        "abs_theta_ms_mean": 1.5060240963855422,
+        "abs_theta_ms_max": 3.0,
+        "spi_transaction_jitter_ms": 3.0
+      },
+      {
+        "child_id": 1,
+        "samples": 123,
+        "theta_us_min": 0,
+        "theta_us_max": 3000,
+        "theta_us_mean": 1308.9430894308944,
+        "theta_us_stddev": 755.7915282401366,
+        "abs_theta_us_mean": 1308.9430894308944,
+        "abs_theta_us_max": 3000,
+        "spi_transaction_jitter_us": 3000,
+        "theta_ms_min": 0.0,
+        "theta_ms_max": 3.0,
+        "theta_ms_mean": 1.3089430894308944,
+        "theta_ms_stddev": 0.7557915282401366,
+        "abs_theta_ms_mean": 1.3089430894308944,
+        "abs_theta_ms_max": 3.0,
+        "spi_transaction_jitter_ms": 3.0
+      }
+    ]
+  },
+  "precision": {
+    "cycles_evaluated": 83,
+    "precision_us_max": 3000,
+    "precision_us_mean": 722.8915662650602,
+    "precision_us_stddev": 716.6396317090627,
+    "precision_ms_max": 3.0,
+    "precision_ms_mean": 0.7228915662650602,
+    "precision_ms_stddev": 0.7166396317090626
+  },
+  "jitter": {
+    "clock_line_jitter": {
+      "available": false,
+      "reason": "Cannot be derived from child software logs; requires oscilloscope edge timing data."
+    },
+    "spi_transaction_jitter": {
+      "definition": "epsilon_i = max(theta_i) - min(theta_i) over the observation window",
+      "unit": "us",
+      "per_child": [
+        {
+          "child_id": 0,
+          "epsilon_us": 3000,
+          "epsilon_ms": 3.0
+        },
+        {
+          "child_id": 1,
+          "epsilon_us": 3000,
+          "epsilon_ms": 3.0
+        }
+      ]
+    }
+  }
+}
