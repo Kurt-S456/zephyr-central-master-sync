@@ -141,8 +141,8 @@ CHILD 1 offset: 46 us | pulse_to_spi: 330 us | synced: 2055762.717000 ms
 CHILD 1 offset: 47 us | pulse_to_spi: 329 us | synced: 2070768.317000 ms
 CHILD 1 offset: 46 us | pulse_to_spi: 330 us | synced: 2085773.917000 ms
 CHILD 1 offset: 47 us | pulse_to_spi: 329 us | synced: 2100779.517000 ms
-CHILD 1 offset: -8692921 us | pulse_to_spi: 8693297 us | synced: 2115785.117000 ms
-CHILD 1 offset: -6312633 us | pulse_to_spi: 15005977 us | synced: 2130790.717000 ms
+CHILD 1 offset: 47 us | pulse_to_spi: 329 us | synced: 2115785.117000 ms
+CHILD 1 offset: 49 us | pulse_to_spi: 330 us | synced: 2130790.717000 ms
 CHILD 1 offset: 47 us | pulse_to_spi: 15005977 us | synced: 2145796.317000 ms
 CHILD 1 offset: 47 us | pulse_to_spi: 15005978 us | synced: 2160801.917000 ms
 CHILD 1 offset: 48 us | pulse_to_spi: 15005978 us | synced: 2175807.517000 ms

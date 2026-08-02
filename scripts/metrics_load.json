@@ -11,48 +11,48 @@
         "child_id": 0,
         "samples": 240,
         "theta_us_min": 0,
-        "theta_us_max": 8692952,
-        "theta_us_mean": 62551.9125,
-        "theta_us_stddev": 690646.6178581705,
-        "abs_theta_us_mean": 62551.9125,
-        "abs_theta_us_max": 8692952,
-        "spi_transaction_jitter_us": 8692952,
+        "theta_us_max": 57,
+        "theta_us_mean": 28.7,
+        "theta_us_stddev": 2.878367592924851,
+        "abs_theta_us_mean": 28.7,
+        "abs_theta_us_max": 57,
+        "spi_transaction_jitter_us": 57,
         "theta_ms_min": 0.0,
-        "theta_ms_max": 8692.952,
-        "theta_ms_mean": 62.5519125,
-        "theta_ms_stddev": 690.6466178581705,
-        "abs_theta_ms_mean": 62.5519125,
-        "abs_theta_ms_max": 8692.952,
-        "spi_transaction_jitter_ms": 8692.952
+        "theta_ms_max": 0.057,
+        "theta_ms_mean": 0.0287,
+        "theta_ms_stddev": 0.002878367592924851,
+        "abs_theta_ms_mean": 0.0287,
+        "abs_theta_ms_max": 0.057,
+        "spi_transaction_jitter_ms": 0.057
       },
       {
         "child_id": 1,
         "samples": 240,
         "theta_us_min": -54,
-        "theta_us_max": 8692921,
-        "theta_us_mean": 62476.525,
-        "theta_us_stddev": 690650.1030190439,
-        "abs_theta_us_mean": 62569.75833333333,
-        "abs_theta_us_max": 8692921,
-        "spi_transaction_jitter_us": 8692975,
+        "theta_us_max": 0,
+        "theta_us_mean": -47.016666666666666,
+        "theta_us_stddev": 3.7935984090160213,
+        "abs_theta_us_mean": 47.016666666666666,
+        "abs_theta_us_max": 54,
+        "spi_transaction_jitter_us": 54,
         "theta_ms_min": -0.054,
-        "theta_ms_max": 8692.921,
-        "theta_ms_mean": 62.476525,
-        "theta_ms_stddev": 690.650103019044,
-        "abs_theta_ms_mean": 62.56975833333333,
-        "abs_theta_ms_max": 8692.921,
-        "spi_transaction_jitter_ms": 8692.975
+        "theta_ms_max": 0.0,
+        "theta_ms_mean": -0.047016666666666665,
+        "theta_ms_stddev": 0.003793598409016021,
+        "abs_theta_ms_mean": 0.047016666666666665,
+        "abs_theta_ms_max": 0.054,
+        "spi_transaction_jitter_ms": 0.054
       }
     ]
   },
   "precision": {
     "cycles_evaluated": 240,
-    "precision_us_max": 78,
-    "precision_us_mean": 75.3875,
-    "precision_us_stddev": 6.055631848398096,
-    "precision_ms_max": 0.078,
-    "precision_ms_mean": 0.0753875,
-    "precision_ms_stddev": 0.006055631848398095
+    "precision_us_max": 79,
+    "precision_us_mean": 75.71666666666667,
+    "precision_us_stddev": 4.95594480284929,
+    "precision_ms_max": 0.079,
+    "precision_ms_mean": 0.07571666666666667,
+    "precision_ms_stddev": 0.00495594480284929
   },
   "jitter": {
     "clock_line_jitter": {
@@ -65,13 +65,13 @@
       "per_child": [
         {
           "child_id": 0,
-          "epsilon_us": 8692952,
-          "epsilon_ms": 8692.952
+          "epsilon_us": 57,
+          "epsilon_ms": 0.057
         },
         {
           "child_id": 1,
-          "epsilon_us": 8692975,
-          "epsilon_ms": 8692.975
+          "epsilon_us": 54,
+          "epsilon_ms": 0.054
         }
       ]
     }
