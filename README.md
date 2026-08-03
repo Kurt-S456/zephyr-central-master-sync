@@ -73,6 +73,14 @@ Build the target with a custom child ID:
 env PLATFORMIO_BUILD_FLAGS="-DCHILD_ID=2" platformio run -e bluepill_f103c8_target
 ```
 
+Build the target with a custom main-thread priority:
+
+```sh
+platformio run -e bluepill_f103c8_target_prio1
+```
+
+`CONFIG_MAIN_THREAD_PRIORITY` is a Zephyr Kconfig option, so it must be set in a Zephyr `.conf` fragment rather than via `PLATFORMIO_BUILD_FLAGS`. The example environment above includes [zephyr/target_prio1.conf](zephyr/target_prio1.conf).
+
 Build and upload the target with a custom child ID (recommended):
 
 ```sh
