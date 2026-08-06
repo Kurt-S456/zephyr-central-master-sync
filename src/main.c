@@ -1,5 +1,27 @@
 #include <zephyr/kernel.h>
 
+#if IS_ENABLED(CONFIG_MCO_OUTPUT_ENABLE)
+#include <stm32f1xx.h>
+#endif
+
+#if IS_ENABLED(CONFIG_MCO_OUTPUT_ENABLE)
+static void enable_mco_output(void)
+{
+	/* Enable GPIOA clock and drive PA8 as AF push-pull at high speed. */
+	RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
+	GPIOA->CRH &= ~(GPIO_CRH_MODE8_Msk | GPIO_CRH_CNF8_Msk);
+	GPIOA->CRH |= (GPIO_CRH_MODE8_0 | GPIO_CRH_MODE8_1 | GPIO_CRH_CNF8_1);
+
+	/* Route selected source to MCO without touching the crystal circuit. */
+	RCC->CFGR &= ~RCC_CFGR_MCO;
+#if IS_ENABLED(CONFIG_MCO_OUTPUT_SOURCE_HSE)
+	RCC->CFGR |= RCC_CFGR_MCO_HSE;
+#elif IS_ENABLED(CONFIG_MCO_OUTPUT_SOURCE_SYSCLK)
+	RCC->CFGR |= RCC_CFGR_MCO_SYSCLK;
+#endif
+}
+#endif
+
 #if IS_ENABLED(CONFIG_SYNTHETIC_LOAD_TEST)
 K_THREAD_STACK_DEFINE(load_thread_stack, CONFIG_SYNTHETIC_LOAD_STACKSIZE);
 static struct k_thread load_thread_data;
@@ -31,6 +53,10 @@ void jitter_target_run(void);
 
 void main(void)
 {
+#if IS_ENABLED(CONFIG_MCO_OUTPUT_ENABLE)
+	enable_mco_output();
+#endif
+
 #if IS_ENABLED(CONFIG_SYNTHETIC_LOAD_TEST)
 	k_thread_create(&load_thread_data,
 				load_thread_stack,

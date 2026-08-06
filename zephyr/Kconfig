@@ -53,4 +53,24 @@ config SYNTHETIC_LOAD_BUSY_WAIT_US
 	depends on SYNTHETIC_LOAD_TEST
 	range 0 1000000
 
+config MCO_OUTPUT_ENABLE
+	bool "Enable MCO output on PA8"
+	default n
+	depends on SOC_SERIES_STM32F1X
+	help
+	  Routes a clock to PA8 using the STM32F1 MCO hardware output.
+
+choice MCO_OUTPUT_SOURCE
+	prompt "MCO clock source"
+	default MCO_OUTPUT_SOURCE_HSE
+	depends on MCO_OUTPUT_ENABLE
+
+config MCO_OUTPUT_SOURCE_HSE
+	bool "HSE"
+
+config MCO_OUTPUT_SOURCE_SYSCLK
+	bool "SYSCLK"
+
+endchoice
+
 endmenu

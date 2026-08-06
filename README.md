@@ -42,6 +42,8 @@ PlatformIO is configured with two environments in `platformio.ini`:
 - `bluepill_f103c8_target`
 - `bluepill_f103c8_jitter_controller`
 - `bluepill_f103c8_jitter_target`
+- `bluepill_f103c8_mco_hse`
+- `bluepill_f103c8_mco_sysclk`
 
 The controller environment is the default build.
 
@@ -135,6 +137,31 @@ env PLATFORMIO_BUILD_FLAGS="-DJITTER_SPI_FREQUENCY_HZ=2000000" platformio run -e
 
 Keep `JITTER_SPI_FREQUENCY_HZ` identical on both jitter environments.
 
+## Clock Probe Builds (MCO on PA8)
+
+Use the MCO environments when you want to observe a clock directly on PA8 with an oscilloscope without probing the crystal network itself.
+
+Build MCO output of HSE on PA8:
+
+```sh
+platformio run -e bluepill_f103c8_mco_hse
+```
+
+Build MCO output of SYSCLK on PA8:
+
+```sh
+platformio run -e bluepill_f103c8_mco_sysclk
+```
+
+Build and upload either MCO image:
+
+```sh
+platformio run -e bluepill_f103c8_mco_hse -t upload
+platformio run -e bluepill_f103c8_mco_sysclk -t upload
+```
+
+Measure PA8 directly on the MCU pin/header. PA8 is a push-pull digital output in this mode.
+
 ## Load Testing Builds
 
 The project supports two operational build profiles:
@@ -185,6 +212,18 @@ Flash the target build:
 
 ```sh
 platformio run -e bluepill_f103c8_target -t upload
+```
+
+Flash the MCO HSE clock-probe build:
+
+```sh
+platformio run -e bluepill_f103c8_mco_hse -t upload
+```
+
+Flash the MCO SYSCLK clock-probe build:
+
+```sh
+platformio run -e bluepill_f103c8_mco_sysclk -t upload
 ```
 
 ## Serial Monitor
