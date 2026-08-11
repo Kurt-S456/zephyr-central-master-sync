@@ -221,6 +221,27 @@ Notes:
 - Input lines must match the child log format: `CHILD <id> offset: <us> us | synced: <ms>.<frac> ms`.
 - Clock line jitter is reported as unavailable from software logs (it requires oscilloscope edge timing data).
 
+## TIE / Clock Jitter Analysis
+
+Use the oscilloscope CSV analysis script to compute TIE and jitter from a Tektronix waveform export:
+
+```sh
+python3 scripts/calc_tie_jitter.py ../metrics/TEK0000.CSV
+```
+
+Optional arguments:
+
+- `-o, --output PATH`: write the generated plot to a custom output file (SVG/PDF/EPS supported)
+- `--target-freq-hz VALUE`: override the nominal target frequency used for the ideal edge grid
+
+Examples:
+
+```sh
+python3 scripts/calc_tie_jitter.py ../metrics/TEK0000.CSV -o tie_plot.svg
+python3 scripts/calc_tie_jitter.py ../metrics/TEK0000.CSV --target-freq-hz 1000000
+python3 scripts/calc_tie_jitter.py ../metrics/TEK0000.CSV -o tie_plot.pdf --target-freq-hz 1000000
+```
+
 ## Chart Generation
 
 Generate charts from the versioned metrics files in `metrics/`.
