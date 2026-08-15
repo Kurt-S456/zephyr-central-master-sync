@@ -65,7 +65,7 @@ def compute_edge_crossings(time, voltage, threshold_v=None):
     return np.array(edge_times), threshold_v
 
 
-def analyze_tie(csv_filename, output_file=None, target_freq_hz=1e6):
+def analyze_tie(csv_filename, output_file=None, target_freq_hz=1e6, hist_bins=500):
     time, voltage = load_tek_csv(csv_filename)
     edge_times, threshold_v = compute_edge_crossings(time, voltage)
 
@@ -85,6 +85,8 @@ def analyze_tie(csv_filename, output_file=None, target_freq_hz=1e6):
     # 3. Time Interval Error (TIE)
     tie = edge_times - ideal_edge_times
     tie_ns = tie * 1e9
+    tie_mean_ns = np.mean(tie_ns)
+    tie_std_ps = np.std(tie) * 1e12
 
     # 4. Jitter Metrics
     tie_p2p = (np.max(tie) - np.min(tie)) * 1e9
@@ -102,18 +104,24 @@ def analyze_tie(csv_filename, output_file=None, target_freq_hz=1e6):
     print("-" * 45)
     print(f"Peak-to-Peak TIE   : {tie_p2p:.3f} ns")
     print(f"RMS TIE (Jitter)   : {tie_rms:.3f} ns")
+    print(f"Mean TIE           : {tie_mean_ns:.6f} ns")
+    print(f"TIE Std Dev        : {tie_std_ps:.3f} ps")
     print(f"Max C2C Jitter     : {np.max(np.abs(c2c_jitter)):.3f} ns")
     print("=" * 45)
 
     # Plotting Results
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 6), sharex=True)
+    fig = plt.figure(figsize=(10, 10))
+    gs = fig.add_gridspec(3, 1, height_ratios=[2, 2, 2])
+    ax1 = fig.add_subplot(gs[0, 0])
+    ax2 = fig.add_subplot(gs[1, 0], sharex=ax1)
+    ax3 = fig.add_subplot(gs[2, 0])
 
     # Plot 1: Waveform & Crossings
     ax1.plot(time * 1e6, voltage, label="CH1 Clock Waveform", color="goldenrod")
     ax1.axhline(threshold_v, color="red", linestyle="--", alpha=0.5, label=f"50% Thresh ({threshold_v:.2f}V)")
     ax1.plot(edge_times * 1e6, np.full_like(edge_times, threshold_v), "rx", label="Detected Edges")
     ax1.set_ylabel("Voltage (V)")
-    ax1.set_title("Tektronix TDS 2001C — SPI Clock Waveform")
+    ax1.set_title(f"Tektronix TDS 2001C — SPI Clock Waveform ({measured_freq / 1e3:.3f} kHz)")
     ax1.grid(True)
     ax1.legend(loc="upper right")
 
@@ -124,6 +132,16 @@ def analyze_tie(csv_filename, output_file=None, target_freq_hz=1e6):
     ax2.set_ylabel("TIE (ns)")
     ax2.set_title(f"Time Interval Error (TIE Track) — P2P Jitter: {tie_p2p:.2f} ns")
     ax2.grid(True)
+
+    # Plot 3: TIE Histogram
+    effective_bins = hist_bins if len(tie_ns) >= hist_bins else max(1, len(tie_ns))
+    ax3.hist(tie_ns, bins=effective_bins, color="steelblue", alpha=0.85, edgecolor="white")
+    ax3.set_xlabel("TIE (ns)")
+    ax3.set_ylabel("Count")
+    ax3.set_title(
+        f"TIE Jitter Histogram — N={len(tie_ns)}, Bins={effective_bins}, Mean={tie_mean_ns:.6f} ns, Std={tie_std_ps:.3f} ps"
+    )
+    ax3.grid(True, axis="y", alpha=0.3)
 
     plt.tight_layout()
 
@@ -158,9 +176,20 @@ def parse_args():
         default=1e6,
         help="Nominal target frequency in Hz (default: 1e6)",
     )
+    parser.add_argument(
+        "--hist-bins",
+        type=int,
+        default=500,
+        help="Number of bins for TIE histogram (default: 500)",
+    )
     return parser.parse_args()
 
 
 if __name__ == "__main__":
     args = parse_args()
-    analyze_tie(args.csv_filename, output_file=args.output, target_freq_hz=args.target_freq_hz)
+    analyze_tie(
+        args.csv_filename,
+        output_file=args.output,
+        target_freq_hz=args.target_freq_hz,
+        hist_bins=args.hist_bins,
+    )
