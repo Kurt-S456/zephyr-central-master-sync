@@ -279,7 +279,32 @@ python3 scripts/offset_boxplot.py --output-stem drift_offset_custom
 python3 scripts/jitter_barchart.py --output-stem spi_jitter_custom
 ```
 
+Precision load-comparison boxplot (No Load vs Under Load):
+
+```sh
+python3 scripts/precision_load_boxplot.py
+```
+
+Use explicit metrics JSON files (V1..V4 order for each scenario) and a single output file path:
+
+```sh
+python3 scripts/precision_load_boxplot.py \
+	--normal-metrics ../metrics/metrics_V1.json ../metrics/metrics_V2.json ../metrics/metrics_V3.json ../metrics/metrics_V4.json \
+	--load-metrics ../metrics/metrics_load_V1.json ../metrics/metrics_load_V2.json ../metrics/metrics_load_V3.json ../metrics/metrics_load_V4.json \
+	--output-file ../metrics/precision_compare.svg
+```
+
+Optional custom version labels (must provide 4 labels):
+
+```sh
+python3 scripts/precision_load_boxplot.py \
+	--version-labels "V1 Baseline" "V2 HW Pulse" "V3 HW Timing" "V4 Hybrid" \
+	--output-file ../metrics/precision_compare.pdf
+```
+
 The scripts always export both `.svg` and `.pdf` files.
+
+For `precision_load_boxplot.py`, providing `--output-file` writes only that file. Without `--output-file`, it exports both `.svg` and `.pdf` using `--output-stem`.
 
 ## Data Format
 
