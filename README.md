@@ -306,6 +306,35 @@ The scripts always export both `.svg` and `.pdf` files.
 
 For `precision_load_boxplot.py`, providing `--output-file` writes only that file. Without `--output-file`, it exports both `.svg` and `.pdf` using `--output-stem`.
 
+## Version-to-V1 Statistical Comparison
+
+Compare each later version against V1 for the mean drift offset, precision, and SPI transaction jitter in both the normal and under-load scenarios:
+
+```sh
+python3 scripts/compare_versions.py
+```
+
+This script automatically finds the default metric files in `metrics/` and compares:
+
+- `V2`, `V3`, and `V4` versus `V1` in the no-load scenario
+- `V2`, `V3`, and `V4` versus `V1` in the under-load scenario
+
+It prints the mean values, mean deltas, Welch-style p-values, and whether each change is statistically significant at the default alpha level of `0.05`.
+
+To pass explicit file lists in a fixed order (V1 first, then later versions):
+
+```sh
+python3 scripts/compare_versions.py \
+  --normal-metrics metrics/metrics_V1.json metrics/metrics_V2.json metrics/metrics_V3.json metrics/metrics_V4.json \
+  --load-metrics metrics/metrics_load_V1.json metrics/metrics_load_V2.json metrics/metrics_load_V3.json metrics/metrics_load_V4.json
+```
+
+You can also override the significance threshold:
+
+```sh
+python3 scripts/compare_versions.py --alpha 0.01
+```
+
 ## Data Format
 
 The controller serializes `k_uptime_get()` into 8 bytes using this layout:
