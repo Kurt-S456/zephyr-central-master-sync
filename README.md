@@ -306,6 +306,40 @@ The scripts always export both `.svg` and `.pdf` files.
 
 For `precision_load_boxplot.py`, providing `--output-file` writes only that file. Without `--output-file`, it exports both `.svg` and `.pdf` using `--output-stem`.
 
+## Network Precision Boundary
+
+The analytical central-master precision bound is defined as:
+
+$$\Pi_{\text{central}} = \epsilon + \Gamma$$
+
+where:
+
+- $\epsilon$ is the worst-case SPI transaction jitter across the network
+- $\Gamma$ is the worst-case accumulated drift offset over the unsynchronized window
+
+In the repo metrics, the script computes this as the sum of the maximum per-child jitter and the maximum absolute drift offset:
+
+$$\Pi_{\text{central}} = \max(\epsilon_i) + \max(|\theta_i|_{\max})$$
+
+This corresponds to the upper bound on the temporal disagreement between a worker and child before the next correction.
+
+Use the calculator on the existing JSON reports:
+
+```sh
+python3 scripts/calc_network_precision_boundary.py
+```
+
+Or with explicit inputs:
+
+```sh
+python3 scripts/calc_network_precision_boundary.py \
+  --normal-metrics metrics/metrics_V1.json metrics/metrics_V2.json metrics/metrics_V3.json metrics/metrics_V4.json \
+  --load-metrics metrics/metrics_load_V1.json metrics/metrics_load_V2.json metrics/metrics_load_V3.json metrics/metrics_load_V4.json \
+  --json-out metrics/network_precision_boundary.json
+```
+
+The script prints the per-version values in both milliseconds and microseconds for the no-load and under-load scenarios, and can also export a single JSON summary.
+
 ## Version-to-V1 Statistical Comparison
 
 Compare each later version against V1 for the mean drift offset, precision, and SPI transaction jitter in both the normal and under-load scenarios:
